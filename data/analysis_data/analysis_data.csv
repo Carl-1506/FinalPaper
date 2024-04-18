@@ -1,4 +1,4 @@
-Country,Code,Year,Democracy_index,Gini_Index,IHDI,Happiness.score
+Country,Code,Year,Democracy_index,Gini_Index,IHDI,Happiness_score
 Albania,ALB,2022,6.41,29.4,0.68700000000000006,5.199
 Algeria,DZA,2022,3.66,27.6,0.58799999999999997,5.122
 Argentina,ARG,2022,6.85,42,0.747,5.967
