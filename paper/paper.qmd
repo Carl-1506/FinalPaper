@@ -20,9 +20,9 @@ bibliography: references.bib
 
 library(tidyverse)
 library(ggplot2)
+library(modelsummary)
 
 ```
-
 
 # Introduction
 
@@ -30,35 +30,9 @@ You can and should cross-reference sections and sub-sections. We use @citeR and 
 
 The remainder of this paper is structured as follows. @sec-data....
 
-
-
 # Data {#sec-data}
 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
-
-```{r}
-#| label: scat-hap-gini
-#| fig-cap: Relationship between Gini Index and Happiness
-#| echo: false
-
-analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
-
-# Load the necessary libraries
-library(ggplot2)
-
-# Assuming analysis_data is your data frame and it has 'Gini_Coefficient' and 'Happiness_Score' columns
-# Basic scatter plot
-basic_plot <- ggplot(analysis_data, aes(x = Gini_Index, y = Happiness_score)) +
-  geom_point()
-
-# Display the plot
-print(basic_plot)
-
-```
-
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
 ```{r}
 #| label: hist-hap
@@ -66,6 +40,14 @@ And also planes (@fig-planes). (You can change the height and width, but don't w
 #| echo: false
 #| warning: false
 #| message: false
+
+
+analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
+analysis_data$IHDI <- round(as.numeric(analysis_data$IHDI), 3)
+
+
+# View the changes to ensure they have been applied
+head(analysis_data$IHDI)
 
 
 ggplot(analysis_data, aes(x = Happiness_score)) +
@@ -89,9 +71,50 @@ ggplot(analysis_data, aes(x = Gini_Index)) +
 
 ```
 
-Talk way more about it. 
+```{r}
+#| label: scat-hap-gini
+#| fig-cap: Relationship between Gini Index and Happiness
+#| echo: false
+
+# Load the necessary libraries
+library(ggplot2)
+
+# Assuming analysis_data is your data frame and it has 'Gini_Coefficient' and 'Happiness_Score' columns
+# Basic scatter plot
+basic_plot <- ggplot(analysis_data, aes(x = Gini_Index, y = Happiness_score)) +
+  geom_point()
+
+# Display the plot
+print(basic_plot)
+
+```
+
+```{r}
+#| label: scat-hap-ihdi
+#| fig-cap: Relationship between IHDI and Happiness
+#| echo: false
+
+# Scatter plot between IHDI and Happiness Score
+# Load the necessary library
+library(ggplot2)
+
+# Assuming analysis_data is your data frame and it has 'IHDI' and 'Happiness_Score' columns
+# Basic scatter plot for IHDI vs. Happiness Score
+basic_plot_ihdi <- ggplot(analysis_data, aes(x = IHDI, y = Happiness_score)) +
+  geom_point()
+
+# Display the plot
+print(basic_plot_ihdi)
 
 
+```
+
+
+Talk more about it.
+
+And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+
+Talk way more about it.
 
 # Model
 
@@ -101,8 +124,9 @@ Here we briefly describe the Bayesian analysis model used to investigate... Back
 
 ## Model set-up
 
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
+Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.
 
+```{=tex}
 \begin{align} 
 y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
 \mu_i &= \alpha + \beta_i + \gamma_i\\
@@ -111,16 +135,14 @@ y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
 \gamma &\sim \mbox{Normal}(0, 2.5) \\
 \sigma &\sim \mbox{Exponential}(1)
 \end{align}
-
+```
 We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
 
 ### Model justification
 
 We expect a positive relationship between the size of the wings and time spent aloft. In particular...
 
 We can use maths by including latex between dollar signs, for instance $\theta$.
-
 
 # Results
 
@@ -136,32 +158,33 @@ library(rstanarm)
 
 first_model <-
   readRDS(file = here::here("models/first_model.rds"))
+
+second_model <-
+  readRDS(file = here::here("models/second_model.rds"))
+
 ```
 
 ```{r}
 #| echo: false
 #| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
+#| label: tbl-secondtmodelresults
+#| tbl-cap: "Multiple Linear Regression"
 #| warning: false
 
+# Generate the model summary for 'first_model' with the desired statistics
 modelsummary::modelsummary(
   list(
-    "First model" = first_model
+    "Second model" = second_model
   ),
-  statistic = "mad",
-  fmt = 2
+  statistic = c("std.error", "statistic", "p.value", "conf.int")
 )
 ```
-
-
-
 
 # Discussion
 
 ## First discussion point {#sec-first-point}
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this.
 
 ## Second discussion point
 
@@ -175,8 +198,7 @@ Weaknesses and next steps should also be included.
 
 \appendix
 
-# Appendix {-}
-
+# Appendix {.unnumbered}
 
 # Additional data details
 
@@ -186,7 +208,7 @@ Weaknesses and next steps should also be included.
 
 In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
 
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
+In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows...
 
 ```{r}
 #| eval: true
@@ -218,11 +240,6 @@ In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. Th
 
 ```
 
-
-
 \newpage
 
-
 # References
-
-
