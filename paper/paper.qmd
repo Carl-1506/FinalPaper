@@ -1,13 +1,13 @@
 ---
 title: "My title"
-subtitle: "My subtitle if needed"
 author: 
-  - First author
+  - Carl Fernandes
   - Another author
 thanks: "Code and data are available at: LINK."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This study investigates the connection between income inequality and national hapiness, questioning the impact of the Gini index. By examining cross-sectional data we find that income inequality has a limited direct effect on happiness. It is evident that factors like the quality of institutions and levels of development as measured by the Democracy Index and the Inequality adjusted Human Development Index (IHDI) have a more significant impact on shaping happiness. Our results indicate that focusing solely on income inequality doesn't provide a complete understanding. Instead a wider range of indicators are. This research contributes to the conversation on disparity and satisfaction by emphasizing the importance of using multifaceted approaches in happiness research and policy development.
+"
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -105,8 +105,6 @@ basic_plot_ihdi <- ggplot(analysis_data, aes(x = IHDI, y = Happiness_score)) +
 
 # Display the plot
 print(basic_plot_ihdi)
-
-
 ```
 
 
@@ -128,12 +126,18 @@ Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta
 
 ```{=tex}
 \begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
+\text{HappinessScore}_i &\sim \mbox{Normal}(\mu_i, \sigma) \\
+\mu_i &= \alpha + \beta \times \text{GiniIndex}_i\\
 \alpha &\sim \mbox{Normal}(0, 2.5) \\
 \beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
 \sigma &\sim \mbox{Exponential}(1)
+\end{align}
+```
+
+```{=tex}
+\begin{align} 
+\text{Happiness\_score}_i &= \beta_0 + \beta_1 \times \text{Democracy\_index}_i + \beta_2 \times \text{Gini\_index}_i + \beta_3 \times \text{IHDI}_i + \varepsilon_i \\
+\varepsilon_i &\sim \mbox{Normal}(0, \sigma^2)
 \end{align}
 ```
 We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
@@ -162,6 +166,22 @@ first_model <-
 second_model <-
   readRDS(file = here::here("models/second_model.rds"))
 
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-firsttmodelresults
+#| tbl-cap: "Linear Regression"
+#| warning: false
+
+# Generate the model summary for 'first_model' with the desired statistics
+modelsummary::modelsummary(
+  list(
+    "First model" = first_model
+  ),
+  statistic = c("std.error", "statistic", "p.value", "conf.int")
+)
 ```
 
 ```{r}
