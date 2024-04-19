@@ -36,9 +36,9 @@ The primary aim of this study is to interrogate the extent to which income inequ
 
 ## Theoretical Framework
 
-Our analysis is based on a range of literature that explores the connection, between gaps and personal well being. A key focus of our framework is the research by Oishi, Kesebir and Diener (2011) who argue for a relationship between income inequality and individual happiness. They suggest that perceptions of fairness and levels of trust play a role in shaping this connection. Particularly they highlight that individuals with incomes tend to be less happy when faced with inequality not necessarily because of their own earnings but due to reduced trust and fairness perceptions. Their results indicate that how people subjectively experience inequality can be just as significant as the income gaps.
+Our analysis is based on a range of literature that explores the connection, between gaps and personal well being. A key focus of our framework is the research by @oishi2011income who argue for a relationship between income inequality and individual happiness. They suggest that perceptions of fairness and levels of trust play a role in shaping this connection. Particularly they highlight that individuals with incomes tend to be less happy when faced with inequality not necessarily because of their own earnings but due to reduced trust and fairness perceptions. Their results indicate that how people subjectively experience inequality can be just as significant as the income gaps.
 
-On the hand Meyer and Sullivan (2013) present a perspective on inequality compared to the mainstream discussions. Their study during the Recession reveals a contrast; while income inequality increased consumption inequality showed a different trend. This contrast prompts a look at measures of inequality stressing the importance of exploring other aspects of economic experiences like spending habits when assessing their impact, on happiness. Our research focuses on exploring if income inequality, by itself can predict happiness or if its impact depends on socio factors, like trust, fairness, consumption levels and the quality of democratic governance. The model we use aims to separate these interconnected influences emphasizing that a complete view of happiness goes beyond measures.
+On the hand @meyer2013consumption present a perspective on inequality compared to the mainstream discussions. Their study during the Recession reveals a contrast; while income inequality increased consumption inequality showed a different trend. This contrast prompts a look at measures of inequality stressing the importance of exploring other aspects of economic experiences like spending habits when assessing their impact, on happiness. Our research focuses on exploring if income inequality, by itself can predict happiness or if its impact depends on socio factors, like trust, fairness, consumption levels and the quality of democratic governance. The model we use aims to separate these interconnected influences emphasizing that a complete view of happiness goes beyond measures.
 
 ## Paper Structure
 
@@ -50,9 +50,9 @@ The remainder of this paper is structured as follows. @sec-data....
 
 ## Previous Research on Happiness and Economic Inequality
 
-The discussion about what makes people happy has grown, with researchers focusing on how economic inequality affects peoples well being. Oishi et al. (2011) shed light on this topic by showing a connection between a country's income gap and individual happiness levels in their in depth study using data from the General Social Survey. They found that feelings of fairness and trust decrease when inequality rises especially affecting those with incomes. These findings suggest that how people perceive conditions can significantly impact societal happiness.
+The discussion about what makes people happy has grown, with researchers focusing on how economic inequality affects peoples well being. @oishi2011income shed light on this topic by showing a connection between a country's income gap and individual happiness levels in their in depth study using data from the General Social Survey. They found that feelings of fairness and trust decrease when inequality rises especially affecting those with incomes. These findings suggest that how people perceive conditions can significantly impact societal happiness.
 
-Meyer and Sullivan (2013) add to this conversation by analyzing how consumption and income inequality change during periods of instability. Their study presents a different viewpoint; even though income inequality rose during the challenges of the early 21st century consumption inequality did not follow the same trend. This challenges the idea that only income differences influence happiness, prompting exploration into how people navigate difficulties.
+@meyer2013consumption add to this conversation by analyzing how consumption and income inequality change during periods of instability. Their study presents a different viewpoint; even though income inequality rose during the challenges of the early 21st century consumption inequality did not follow the same trend. This challenges the idea that only income differences influence happiness, prompting exploration into how people navigate difficulties.
 
 Overall existing research indicates that the link between inequality and happiness is complex shaped by both measures and subjective social views. It also suggests that elements like trust in systems and perceptions of fairness are crucial, in shaping this relationship. Exploring the dynamics involved requires an investigation, into the factors that influence how economic inequality impacts our sense of happiness.
 
@@ -150,7 +150,8 @@ Both models are estimated using ordinary least squares (OLS), which minimizes th
 
 The data are prepared for analysis by ensuring no multicollinearity among predictors, normality of residuals, homoscedasticity, and independence of observations—key assumptions for the validity of OLS regression. Violations of these assumptions are addressed through appropriate transformations and robust standard error calculations where necessary. For more information on how this is done, please refer to @sec-model-details.
 
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
+We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`, along with additional tools from the `tidyverse` [@tidyverse], `ggplot2` [@ggplot2], `modelsummary` [@modelsummary], and `car` [@car].
+
 
 ## Model justification
 
@@ -178,27 +179,51 @@ In this model the Gini index coefficient is positive ($\beta_2$ = 0.013) but not
 
 The models explanatory capability has been notably improved, with an R squared value of 0.735 showing that 73.5% of happiness score variations are accounted for by the model. The adjusted R squared value of 0.727 considers predictor variables. Confirms the models reliability. The decrease in RMSE to 0.53 when compared to the model indicates a predictive capability of this expanded analysis.
 
-## Diagnostic checks
-
-The Q-Q plot for the residuals of the second model in @fig-qq exhibits a slight deviation from normality, particularly in the tails, suggesting the presence of outliers or heavy tails in the data distribution. This deviation from the expected straight line in the Q-Q plot could imply that the residuals do not follow a perfect normal distribution, which is an assumption for the OLS regression. However, the majority of the points do align well with the theoretical quantiles, indicating that any deviations from normality are not extreme.
-
-Moreover, this departure from normality does not necessarily invalidate the model but does suggest that predictions may be less reliable at the extremities of the data range. It might be beneficial to explore whether a transformation of the response variable or the use of robust regression techniques could yield a more homoscedastic and normally distributed set of residuals. The model could also be enhanced by investigating potential leverage points or influential observations that may disproportionately impact the regression results.
-
-Despite these considerations, the central mass of the data adheres closely to the line, reinforcing confidence in the model's findings for the majority of the data. Consequently, while the Q-Q plot indicates minor concerns, the overall diagnostic evaluation suggests that the model provides a generally reliable representation of the data.
 
 # Discussion
 
-## First discussion point {#sec-first-point}
+## Examining Income Inequality and National Well-Being
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this.
+Our baseline model reveals a subtle yet significant inverse relationship between income inequality and national happiness. For every 1% increase in the Gini Index, happiness scores drop by an average of 0.043 points, albeit explaining just over 10% of the variance in national happiness scores. This suggests that while income disparity does relate to well-being, it's not the sole influencer.
 
-## Second discussion point
+In contrast, our comprehensive model incorporating democracy and human development factors presents a broader narrative. Notably, the IHDI strongly predicts happiness, suggesting equitable human development trumps income distribution in contributing to national well-being. Moreover, the positive coefficient of the Democracy Index corroborates the importance of democratic health in shaping happiness, a sentiment echoed by prior research.
 
-## Third discussion point
+The shift from the Gini Index's singular impact in the baseline model to its diminished role in the extended model illuminates a key insight: happiness is multifaceted. This understanding is crucial for policymakers aiming to foster societal contentment. Solely focusing on economic disparity without considering democracy and development may offer an incomplete picture and lead to policies that inadequately address the constituents of well-being.
 
-## Weaknesses and next steps
+## Limitations and Future Directions
 
-Weaknesses and next steps should also be included.
+Though the analysis offers insights it does have its limitations. The moderate R squared values of the model suggest that there might be factors influencing a country's happiness that haven't been explored yet. Factors, like cultural norms, mental health prevalence and environmental conditions could provide explanations and should be taken into account in future studies.
+
+One significant limitation is the sectional nature of the data, which captures a moment in time but restricts our ability to establish causality or track changes over time. Longitudinal studies could shed light on how changes in income inequality, democracy and human development impact trends in happiness.
+
+Moreover using country level averages might hide variations within countries. For example differences in income across regions, quality of governance or access to resources within a country could offer a understanding of the relationship between happiness and inequality.
+
+Additionally while the IHDI is a comprehensive measure, it could be enhanced by including direct indicators related to social support, freedom or perceptions of corruption – factors known to be linked with national well being.
+
+Future research would also benefit from including data to capture the experiences behind the quantitative measures. This approach would provide insights, into what shapes and influences happiness across settings.
+In summary the results of this research add to the discussion, about the economics of happiness. It's important to view these findings in the context of a conversation that considers viewpoints and approaches. As we continue to improve data availability and analytical techniques we should also deepen our examination of the elements that support a nations well being.
+
+## Implications for Policy and Practice
+
+The insights gleaned from our models carry practical implications for policymakers and stakeholders focused on enhancing national well-being. Given the observed relationship between happiness and the Gini Index, policy measures aimed at narrowing income inequality should be part of a broader strategy to improve societal contentment. Yet, as the extended model indicates, such measures would be incomplete without simultaneously bolstering democratic integrity and promoting inclusive human development.
+
+Investments in education, health, and fair governance are essential to address the broader determinants of happiness revealed by the IHDI's strong predictive value. Policies that foster equal opportunities for growth and development can help mitigate the negative effects of income inequality. In parallel, strengthening democratic institutions may amplify the positive impact on national happiness by empowering citizens and fostering trust in governance.
+
+This research underscores the importance of an integrated policy approach that does not solely prioritize economic factors but also considers the socio-political environment's impact on people's life satisfaction. The nuanced interplay between economic, political, and developmental factors suggests that holistic, cross-sectoral strategies are likely to be more effective in promoting national happiness.
+
+Therefore, governments and organizations should consider these findings when designing interventions to enhance well-being. Collaborative efforts that align economic reforms with social and political development could lead to more sustainable improvements in happiness and quality of life for citizens.
+
+In essence, the path to a happier society is multifaceted and requires a thoughtful balance between economic equality, democratic health, and human development. As this study indicates, the pursuit of happiness at a national level is complex and warrants a nuanced approach beyond traditional economic indicators.
+
+# Conclusion
+
+Our study shows that the happiness levels within a country are not solely determined by income inequality. While economic disparities do play a role in happiness their impact is significantly influenced by the quality of governance and the level of development. These results emphasize the importance of implementing policies that extend beyond economic matters to include strengthening institutions and promoting fair human development.
+
+The influence of these socio-political factors implies that improving national happiness demands a multifaceted approach. Oversimplifying improving happiness to just economic adjustments overlooks crucial aspects that could boost societal well being.
+
+Nevertheless our conclusions are based on sectional data, which restricts our ability to establish causation. Future research should incorporate data to track these effects over time and consider influences such as cultural and psychological factors.
+
+In essence enhancing happiness is an endeavor that requires a well rounded strategy involving economic, political and social measures. Our findings advocate for a shift, towards comprehensive policy making that acknowledges the various determinants of happiness.
 
 \newpage
 
@@ -318,6 +343,12 @@ modelsummary::modelsummary(
 In preparation for the OLS regression, the dataset was meticulously inspected for multicollinearity to prevent inflated variance in the coefficient estimates. The IHDI, adjusted for income disparities, was chosen specifically to avoid overlap with the Gini index. The assumptions of residual normality, constant variance across predictions (homoscedasticity), and the independence of observations were each tested. Any deviations from these conditions prompted corrective measures such as variable transformations to achieve normality and homoscedasticity, and the use of robust standard errors to counteract potential heteroscedasticity, ensuring the robustness of our regression results.
 
 ## Diagnostics
+
+The Q-Q plot for the residuals of the second model in @fig-qq exhibits a slight deviation from normality, particularly in the tails, suggesting the presence of outliers or heavy tails in the data distribution. This deviation from the expected straight line in the Q-Q plot could imply that the residuals do not follow a perfect normal distribution, which is an assumption for the OLS regression. However, the majority of the points do align well with the theoretical quantiles, indicating that any deviations from normality are not extreme.
+
+Moreover, this departure from normality does not necessarily invalidate the model but does suggest that predictions may be less reliable at the extremities of the data range. It might be beneficial to explore whether a transformation of the response variable or the use of robust regression techniques could yield a more homoscedastic and normally distributed set of residuals. The model could also be enhanced by investigating potential leverage points or influential observations that may disproportionately impact the regression results.
+
+Despite these considerations, the central mass of the data adheres closely to the line, reinforcing confidence in the model's findings for the majority of the data. Consequently, while the Q-Q plot indicates minor concerns, the overall diagnostic evaluation suggests that the model provides a generally reliable representation of the data.
 
 ```{r}
 #| echo: false
