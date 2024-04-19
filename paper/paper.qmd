@@ -1,5 +1,5 @@
 ---
-title: "My title"
+title: "Dissecting Happiness: A Cross-National Analysis of Income Inequality and Its Impact"
 author: 
   - Carl Fernandes
 thanks: "Code and data are available at: https://github.com/Carl-1506/Happiness-and-inequality.git"

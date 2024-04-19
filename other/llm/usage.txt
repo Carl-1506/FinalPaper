@@ -681,3 +681,11 @@ Maintenance
 Who will be supporting/hosting/maintaining the dataset?
 The dataset will be maintained by [Your Name or Institution], with updates and errata posted to the associated GitHub repository.
 \newpage
+
+User
+give me a title for this
+
+ChatGPT
+How about "Dissecting Happiness: A Cross-National Analysis of Income Inequality and Its Impact"?
+
+
