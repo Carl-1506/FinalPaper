@@ -26,16 +26,78 @@ library(modelsummary)
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. We use @citeR and @rohan.
+## Background
+
+Global discourse on well-being has increasingly recognized happiness as a critical indicator of societal progress. This paper embarks on an empirical inquiry into the determinants of happiness, with a particular focus on income distribution. Traditional economic theories suggest a correlation between economic prosperity and happiness, but emerging research prompts a re-evaluation of this association. In this context, income inequality, typically measured by the Gini index, emerges as a potential factor influencing happiness. Yet, the depth of its impact remains under-examined and is often overshadowed by more visible economic indicators.
+
+## Research Question and Objectives
+
+The primary aim of this study is to interrogate the extent to which income inequality affects national happiness levels when considered in isolation. Secondary to this is an evaluation of the interdependent effects of democratic governance and human development. The research questions guiding this analysis are: Does income inequality significantly predict happiness across nations, and if so, to what degree? Furthermore, how do variables such as the state of democracy and human development refine our understanding of this relationship? The objectives are twofold: to quantify the influence of income inequality on happiness and to discern the moderating roles of democratic governance and human development.
+
+## Theoretical Framework
+
+Our analysis is based on a range of literature that explores the connection, between gaps and personal well being. A key focus of our framework is the research by Oishi, Kesebir and Diener (2011) who argue for a relationship between income inequality and individual happiness. They suggest that perceptions of fairness and levels of trust play a role in shaping this connection. Particularly they highlight that individuals with incomes tend to be less happy when faced with inequality not necessarily because of their own earnings but due to reduced trust and fairness perceptions. Their results indicate that how people subjectively experience inequality can be just as significant as the income gaps.
+
+On the hand Meyer and Sullivan (2013) present a perspective on inequality compared to the mainstream discussions. Their study during the Recession reveals a contrast; while income inequality increased consumption inequality showed a different trend. This contrast prompts a look at measures of inequality stressing the importance of exploring other aspects of economic experiences like spending habits when assessing their impact, on happiness. Our research focuses on exploring if income inequality, by itself can predict happiness or if its impact depends on socio factors, like trust, fairness, consumption levels and the quality of democratic governance. The model we use aims to separate these interconnected influences emphasizing that a complete view of happiness goes beyond measures.
+
+## Paper Structure
+
+The paper proceeds as follows: Section 2 presents a review of the pertinent literature, laying the groundwork for our empirical strategy. In Section 3, we detail the data sources and describe the variables under study. Section 4 outlines our methodology, articulating the econometric approach and data handling procedures. Section 5, the core of our empirical analysis, presents the results and explores their robustness. Section 6 discusses the implications of our findings within the broader socio-economic context, and Section 7 concludes by synthesizing the study's insights and suggesting avenues for future research.
 
 The remainder of this paper is structured as follows. @sec-data....
 
+# Literature Reivew
+
+## Previous Research on Happiness and Economic Inequality
+
+The discussion about what makes people happy has grown, with researchers focusing on how economic inequality affects peoples well being. Oishi et al. (2011) shed light on this topic by showing a connection between a country's income gap and individual happiness levels in their in depth study using data from the General Social Survey. They found that feelings of fairness and trust decrease when inequality rises especially affecting those with incomes. These findings suggest that how people perceive conditions can significantly impact societal happiness.
+
+Meyer and Sullivan (2013) add to this conversation by analyzing how consumption and income inequality change during periods of instability. Their study presents a different viewpoint; even though income inequality rose during the challenges of the early 21st century consumption inequality did not follow the same trend. This challenges the idea that only income differences influence happiness, prompting exploration into how people navigate difficulties.
+
+Overall existing research indicates that the link between inequality and happiness is complex shaped by both measures and subjective social views. It also suggests that elements like trust in systems and perceptions of fairness are crucial, in shaping this relationship. Exploring the dynamics involved requires an investigation, into the factors that influence how economic inequality impacts our sense of happiness.
+
+## Gaps in Literature
+
+While the current body of research provides a foundational understanding of economic inequality's impact on happiness, there remains a lacuna in quantifying the relative influence of associated socio-economic factors. Notably, the existing literature often examines income disparity without fully integrating other potential variables that may exert a more pronounced effect on subjective well-being.
+
+Moreover, the dynamic between perceived economic fairness and societal trust as intermediaries in the inequality-happiness paradigm warrants further exploration. Studies have largely concentrated on aggregate data and broad metrics, which may overlook the micro-level nuances and the heterogeneity of individual experiences within various economic strata. Additionally, the diverse methodologies and scopes of previous research present a fragmented view, indicating a need for more harmonized and cross-culturally applicable analyses.
+
+This study aims to fill these gaps by offering a more holistic approach, incorporating a multi-variable framework that considers not only the direct impact of income inequality but also the roles of democratic governance and human development. Such an approach is designed to provide a more granular understanding of how income inequality interplays with other key factors to influence happiness across different national contexts.
+
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+## Data Sources
+
+To conduct an examination of the factors we're interested, this study utilizes data from various reliable sources each contributing important metrics for our analysis.
+
+### **Happiness Score**
+
+The happiness scores come from the World Happiness Report, a survey that assesses subjective well being. This dataset offers happiness ratings for countries giving us insights into how individuals perceive their own life satisfaction. These scores reflect a country's happiness. Are crucial for understanding the psychological impact of economic circumstances. The data range is 0-10, with 10 being the most happy.
+
+### **Gini Index**
+
+The Gini index indicates income distribution within countries and is sourced from the database of the World Bank. This metric is significant in our analysis as it serves as a measure of income inequality with values indicating greater disparities.The index is measured as a percentage, with lower scores indicating more income equality.
+
+### **Democracy Index Data Source**
+
+The Democracy Index, which evaluates governance and democratic freedom across countries worldwide is sourced from Our World in Datas database. It offers a perspective on systems, essential, for interpreting the broader socio political landscape where economic and well being indicators intersect. It ranges from 0-10 with 10 being the most democratic.
+
+### **IHDI**
+
+The Inequality adjusted Human Development Index (IHDI) data is sourced from the United Nations Development Programme (UNDP). Unlike the Human Development Index (HDI) IHDI considers inequality, in distribution among the population offering a more comprehensive assessment of human development gaps. It ranges between 0 and 1 with 1 being most developed.
+
+## Sample Description
+
+The study utilizes a dataset comprising observations from over 150 countries for the year 2022. This snapshot approach allows for a detailed examination of contemporary socio-economic conditions and their impact on happiness across diverse national contexts. Focusing on a single year enhances the consistency of data interpretation and avoids the complexities associated with longitudinal trend analysis.
+
+This dataset's geographic and temporal scope provides a robust basis for evaluating the relationships between happiness, economic disparity, democratic governance, and human development, offering insights into how these dynamics manifest in the modern world.
+
+## Descriptive Statistics
+
+### Happiness Score Distribution
 
 ```{r}
-#| label: hist-hap
+#| label: fig-hist-hap
 #| fig-cap: Distribution of Happiness Scores
 #| echo: false
 #| warning: false
@@ -45,19 +107,18 @@ Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
 analysis_data$IHDI <- round(as.numeric(analysis_data$IHDI), 3)
 
-
-# View the changes to ensure they have been applied
-head(analysis_data$IHDI)
-
-
 ggplot(analysis_data, aes(x = Happiness_score)) +
   geom_histogram(binwidth = 0.2, fill = "skyblue", color = "black") +
   labs(x = "Happiness Score", y = "Frequency") +
   theme_minimal()
 ```
 
+In @fig-hist-hap we see how happiness scores are spread out in the sample. The graph reveals that there are peaks indicating common levels of reported happiness. Most countries fall in the mid-range of scores suggesting that a moderate level of self reported well being is most common. Notably few countries report high or low happiness levels showing that globally such extreme ratings are rare.
+
+### Gini Index Distribution
+
 ```{r}
-#| label: hist-gini
+#| label: fig-hist-gini
 #| fig-cap: Distribution of Gini Index
 #| echo: false
 #| warning: false
@@ -71,75 +132,87 @@ ggplot(analysis_data, aes(x = Gini_Index)) +
 
 ```
 
+The distribution of Gini index values shown in @fig-hist-gini displays a pattern indicating that most countries have lower levels of inequality and fewer have high inequality. This skewness suggests that although income inequality exists extreme cases are not as prevalent.
+
+### Relationship Between Happiness and Gini Index
+
 ```{r}
-#| label: scat-hap-gini
+#| label: fig-scat-hap-gini
 #| fig-cap: Relationship between Gini Index and Happiness
 #| echo: false
 
 # Load the necessary libraries
 library(ggplot2)
 
-# Assuming analysis_data is your data frame and it has 'Gini_Coefficient' and 'Happiness_Score' columns
-# Basic scatter plot
+#  scatter plot
 basic_plot <- ggplot(analysis_data, aes(x = Gini_Index, y = Happiness_score)) +
   geom_point()
 
 # Display the plot
 print(basic_plot)
-
 ```
 
+In @fig-scat-hap-gini there's a scatter plot comparing happiness scores to Gini index values. The plot doesn't show a persistent pattern or strong linear relationship implying that factors other than income inequality may also influence happiness.
+
+### Relationship Between Happiness and IHDI
+
 ```{r}
-#| label: scat-hap-ihdi
+#| label: fig-scat-hap-ihdi
 #| fig-cap: Relationship between IHDI and Happiness
 #| echo: false
+#| warning: false
 
-# Scatter plot between IHDI and Happiness Score
-# Load the necessary library
-library(ggplot2)
-
-# Assuming analysis_data is your data frame and it has 'IHDI' and 'Happiness_Score' columns
-# Basic scatter plot for IHDI vs. Happiness Score
+# scatter plot for IHDI vs. Happiness Score
 basic_plot_ihdi <- ggplot(analysis_data, aes(x = IHDI, y = Happiness_score)) +
   geom_point()
 
-# Display the plot
 print(basic_plot_ihdi)
 ```
 
+Lastly @fig-scat-hap-ihdi illustrates the connection between happiness scores and IHDI. A positive trend is visible with higher IHDI values corresponding to happiness scores. This suggests a link where countries with equitable human development tend to have happier citizens.
 
-Talk more about it.
+### Discussion
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-Talk way more about it.
+The thorough analysis lays the foundation for an investigation through methods. From the visuals it appears that although income inequality, measured by the Gini index is evident in the data, its impact on happiness is not easily defined and probably intertwined with other socio-economic aspects. This theory will be examined further in the multivariate analysis.
 
 # Model
 
-The goal of our modelling strategy is twofold. Firstly,...
+This research utilizes two approaches to understand the connection between happiness and various socio-economic factors. The main objective is to examine how income inequality, represented by the Gini index along with democratic governance and human development, relate to self reported happiness levels. These models aim to offer a perspective considering both indirect impacts of these factors on a countrys overall well being.
 
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
+The initial model is a linear regression that suggests happiness scores are directly linked to the Gini index in a linear manner. This model acts as a foundation for understanding the association between income inequality and happiness without considering variables.
+
+The second model is a regression that builds upon the first by introducing additional predictors; Democracy index and IHDI. This model enables us to investigate how income distribution, democratic governance and human development collectively influence happiness presenting a examination of the socio-economic dynamics involved.
 
 ## Model set-up
 
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.
+### Simple Linear Model
+The initial model considers the Gini index as the sole predictor. This setup allows for an assessment of how variations in income inequality might align with changes in happiness scores. It is represented by the equation below where $\alpha$ is the intercept, $\beta$ is the slope coefficient for the Gini index, and $\epsilon_i$ is the error term.
+
+```{=tex}
+$$
+\begin{aligned}
+HappinessScore_{i} &= \alpha + \beta \times GiniIndex_{i} + \epsilon_{i} \\
+\epsilon_{i} &\sim N(0, \sigma^2)
+\end{aligned}
+$$
+```
+
+### Multi-Linear Model
+
+Expanding on the initial model, the second regression introduces additional explanatory variables and is represented below. In this model, $\alpha$ represents the intercept, 
+$\beta_1$, $\beta_2$, and $\beta_3$ are the coefficients for Democracy index, Gini index, and IHDI, respectively, while $\epsilon$ denotes the error term.
 
 ```{=tex}
 \begin{align} 
-\text{HappinessScore}_i &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta \times \text{GiniIndex}_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
+\text{Happiness\_score}_i &= \alpha + \beta_1 \times \text{Democracy\_index}_i + \beta_2 \times \text{Gini\_index}_i + \beta_3 \times \text{IHDI}_i + \varepsilon_i \\
+\varepsilon &\sim \mbox{Normal}(0, \sigma^2)
 \end{align}
 ```
 
-```{=tex}
-\begin{align} 
-\text{Happiness\_score}_i &= \beta_0 + \beta_1 \times \text{Democracy\_index}_i + \beta_2 \times \text{Gini\_index}_i + \beta_3 \times \text{IHDI}_i + \varepsilon_i \\
-\varepsilon_i &\sim \mbox{Normal}(0, \sigma^2)
-\end{align}
-```
+Both models are estimated using ordinary least squares (OLS), which minimizes the sum of squared differences between the observed and predicted values. This method was chosen for its robustness and simplicity, facilitating the interpretation of coefficient estimates.
+
+The data are prepared for analysis by ensuring no multicollinearity among predictors, normality of residuals, homoscedasticity, and independence of observations—key assumptions for the validity of OLS regression. Violations of these assumptions are addressed through appropriate transformations and robust standard error calculations where necessary. For more information on how this is done, please refer to @sec-model-details.
+
 We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
 
 ### Model justification
