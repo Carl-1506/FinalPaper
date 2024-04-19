@@ -1,30 +1,25 @@
-# Starter folder
+# Happiness and Income Inequality Analysis
 
 ## Overview
 
-This repo provides students with a foundation for their own projects associated with *Telling Stories with Data*. You do not need every aspect for every paper and you should delete aspects that you do not need.
-
+This repository contains all materials related to the analysis of the relationship between happiness and income inequality across various countries. It includes data preparation, analysis scripts, models, and the final paper.
 
 ## File Structure
 
-The repo is structured as:
+- `data/raw_data` - Original datasets as obtained from various sources.
+- `data/analysis_data` - The dataset after cleaning and transformations.
+- `models` - Contains the output from statistical models and diagnostics.
+- `other` - Includes related literature, supplementary materials, and notes.
+- `paper` - Quarto document with the written analysis, bibliography file, and the final PDF paper.
+- `scripts` - R scripts for data simulation, cleaning, analysis, and model fitting.
 
--   `data/raw_data` contains the raw data as obtained from X.
--   `data/analysis_data` contains the cleaned dataset that was constructed.
--   `model` contains fitted models. 
--   `other` contains relevant literature, details about LLM chat interactions, and sketches.
--   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
--   `scripts` contains the R scripts used to simulate, download and clean data.
+## Statement on LLM Usage
 
+Portions of the code and text have been developed with assistance from AI tool ChatGPT for drafting sections of the paper. The detailed chat history with the LLMs is documented in `other/llm_usage.txt`.
 
-## Statement on LLM usage
+## Data Sources
 
-Aspects of the code were written with the help of the auto-complete tool, Codriver. The abstract and introduction were written with the help of ChatHorse and the entire chat history is available in inputs/llms/usage.txt.
-
-## Some checks
-
-- [ ] Change the rproj file name so that it's not starter_folder.Rproj
-- [ ] Change the README title so that it's not Starter folder
-- [ ] Remove files that you're not using
-- [ ] Update comments in R scripts
-- [ ] Remove this checklist
+- Happiness scores were retrieved from the World Happiness Report.
+- Gini Index data was sourced from the World Bank database.
+- Democracy Index information was obtained from Our World in Data.
+- Human Development Index data was provided by the United Nations Development Programme.

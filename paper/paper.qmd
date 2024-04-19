@@ -5,7 +5,7 @@ author:
 thanks: "Code and data are available at: https://github.com/Carl-1506/Happiness-and-inequality.git"
 date: today
 date-format: long
-abstract: "This study investigates the connection between income inequality and national hapiness, questioning the impact of the Gini index. By examining cross-sectional data we find that income inequality has a limited direct effect on happiness. It is evident that factors like the quality of institutions and levels of development as measured by the Democracy Index and the Inequality adjusted Human Development Index (IHDI) have a more significant impact on shaping happiness. Our results indicate that focusing solely on income inequality doesn't provide a complete understanding. Instead a wider range of indicators are. This research contributes to the conversation on disparity and satisfaction by emphasizing the importance of using multifaceted approaches in happiness research and policy development."
+abstract: "This study explores the connection between income inequality and national hapiness, questioning the impact of the Gini index. By examining cross-sectional data we find that income inequality has a limited direct effect on happiness. It is evident that factors like the quality of institutions and levels of development as measured by the Democracy Index and the Inequality adjusted Human Development Index (IHDI) have a more significant impact on shaping happiness. Our results indicate that focusing solely on income inequality doesn't provide a complete understanding. Instead a wider range of indicators are. This research contributes to the conversation on disparity and satisfaction by emphasizing the importance of using multifaceted approaches in happiness research and policy development."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -28,7 +28,7 @@ library(car)
 
 ## Background
 
-Global discourse on well-being has increasingly recognized happiness as a critical indicator of societal progress. This paper embarks on an empirical inquiry into the determinants of happiness, with a particular focus on income distribution. Traditional economic theories suggest a correlation between economic prosperity and happiness, but emerging research prompts a re-evaluation of this association. In this context, income inequality, typically measured by the Gini index, emerges as a potential factor influencing happiness. Yet, the depth of its impact remains under-examined and is often overshadowed by more visible economic indicators.
+Global discourse on well-being has increasingly recognized happiness as a critical indicator of societal progress. This paper examines the determinants of happiness, with a particular focus on income distribution. Traditional economic theories suggest a correlation between economic equality and happiness, but emerging research prompts a re-evaluation of this association. In this context, income inequality, typically measured by the Gini index, emerges as a potential factor influencing happiness. Yet, the depth of its impact remains under-examined and is often overshadowed by more visible economic indicators.
 
 ## Research Question and Objectives
 
@@ -36,17 +36,15 @@ The primary aim of this study is to interrogate the extent to which income inequ
 
 ## Theoretical Framework
 
-Our analysis is based on a range of literature that explores the connection, between gaps and personal well being. A key focus of our framework is the research by @oishi2011income who argue for a relationship between income inequality and individual happiness. They suggest that perceptions of fairness and levels of trust play a role in shaping this connection. Particularly they highlight that individuals with incomes tend to be less happy when faced with inequality not necessarily because of their own earnings but due to reduced trust and fairness perceptions. Their results indicate that how people subjectively experience inequality can be just as significant as the income gaps.
+Our analysis is based on a range of literature that explores the connection between economic inequality and personal well being. A key focus of our framework is the research by @oishi2011income who argue for a relationship between income inequality and individual happiness. They suggest that perceptions of fairness and levels of trust play a role in shaping this connection. Particularly they highlight that individuals with incomes tend to be less happy when faced with inequality not necessarily because of their own earnings but due to reduced trust and fairness perceptions. Their results indicate that how people subjectively experience inequality can be just as significant as the income gaps.
 
-On the hand @meyer2013consumption present a perspective on inequality compared to the mainstream discussions. Their study during the Recession reveals a contrast; while income inequality increased consumption inequality showed a different trend. This contrast prompts a look at measures of inequality stressing the importance of exploring other aspects of economic experiences like spending habits when assessing their impact, on happiness. Our research focuses on exploring if income inequality, by itself can predict happiness or if its impact depends on socio factors, like trust, fairness, consumption levels and the quality of democratic governance. The model we use aims to separate these interconnected influences emphasizing that a complete view of happiness goes beyond measures.
+On the hand @meyer2013consumption present a perspective on inequality compared to the mainstream discussions. Their study during the Recession reveals a contrast; while income inequality increased consumption inequality showed a different trend. This contrast prompts a look at measures of inequality stressing the importance of exploring other aspects of economic experiences like spending habits when assessing their impact on happiness. Our research focuses on exploring if income inequality by itself can predict happiness or if its impact depends on other socio-economic factors like trust, fairness, consumption levels and the quality of democratic governance. The model we use aims to separate these interconnected influences emphasizing that a complete view of happiness goes beyond measures.
 
 ## Paper Structure
 
-The paper proceeds as follows: Section 2 presents a review of the pertinent literature, laying the groundwork for our empirical strategy. In Section 3, we detail the data sources and describe the variables under study. Section 4 outlines our methodology, articulating the econometric approach and data handling procedures. Section 5, the core of our empirical analysis, presents the results and explores their robustness. Section 6 discusses the implications of our findings within the broader socio-economic context, and Section 7 concludes by synthesizing the study's insights and suggesting avenues for future research.
+The paper proceeds as follows: @sec-lit presents a review of the pertinent literature, laying the groundwork for our empirical strategy. In @sec-data, we detail the data sources and describe the variables under study. @sec-model outlines our models. @sec-results, the core of our empirical analysis, presents the results and explores their robustness. @sec-dis discusses the implications of our findings within the broader socio-economic context, and @sec-con concludes by synthesizing the study's insights and suggesting avenues for future research.
 
-The remainder of this paper is structured as follows. @sec-data....
-
-# Literature Reivew
+# Literature Reivew {#sec-lit}
 
 ## Previous Research on Happiness and Economic Inequality
 
@@ -114,7 +112,7 @@ Lastly @fig-scat-hap-ihdi illustrates the connection between happiness scores an
 
 The thorough analysis lays the foundation for an investigation through methods. From the visuals it appears that although income inequality, measured by the Gini index is evident in the data, its impact on happiness is not easily defined and probably intertwined with other socio-economic aspects. This theory will be examined further in the multivariate analysis.
 
-# Model
+# Model {#sec-model}
 
 This research utilizes two approaches to understand the connection between happiness and various socio-economic factors. The main objective is to examine how income inequality, represented by the Gini index along with democratic governance and human development, relate to self reported happiness levels. These models aim to offer a perspective considering both indirect impacts of these factors on a countrys overall well being.
 
@@ -161,7 +159,7 @@ In contrast, the second model's inclusion of the Democracy index and IHDI variab
 
 Both models are grounded in empirical evidence from prior research indicating potential links between these variables and happiness. By employing OLS regression, we aim to build on these findings, providing clear, interpretable coefficients that measure the strength and direction of these relationships. The simplicity and transparency of OLS facilitate the communication of results to a broad audience, which aligns with the study's objective of contributing to the policy discourse on enhancing societal well-being.
 
-# Results
+# Results {#sec-results}
 
 ## Baseline Model
 
@@ -180,7 +178,7 @@ In this model the Gini index coefficient is positive ($\beta_2$ = 0.013) but not
 The models explanatory capability has been notably improved, with an R squared value of 0.735 showing that 73.5% of happiness score variations are accounted for by the model. The adjusted R squared value of 0.727 considers predictor variables. Confirms the models reliability. The decrease in RMSE to 0.53 when compared to the model indicates a predictive capability of this expanded analysis.
 
 
-# Discussion
+# Discussion {#sec-dis}
 
 ## Examining Income Inequality and National Well-Being
 
@@ -215,7 +213,7 @@ Therefore, governments and organizations should consider these findings when des
 
 In essence, the path to a happier society is multifaceted and requires a thoughtful balance between economic equality, democratic health, and human development. As this study indicates, the pursuit of happiness at a national level is complex and warrants a nuanced approach beyond traditional economic indicators.
 
-# Conclusion
+# Conclusion {#sec-con}
 
 Our study shows that the happiness levels within a country are not solely determined by income inequality. While economic disparities do play a role in happiness their impact is significantly influenced by the quality of governance and the level of development. These results emphasize the importance of implementing policies that extend beyond economic matters to include strengthening institutions and promoting fair human development.
 
