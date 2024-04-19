@@ -2,12 +2,10 @@
 title: "My title"
 author: 
   - Carl Fernandes
-  - Another author
 thanks: "Code and data are available at: LINK."
 date: today
 date-format: long
-abstract: "This study investigates the connection between income inequality and national hapiness, questioning the impact of the Gini index. By examining cross-sectional data we find that income inequality has a limited direct effect on happiness. It is evident that factors like the quality of institutions and levels of development as measured by the Democracy Index and the Inequality adjusted Human Development Index (IHDI) have a more significant impact on shaping happiness. Our results indicate that focusing solely on income inequality doesn't provide a complete understanding. Instead a wider range of indicators are. This research contributes to the conversation on disparity and satisfaction by emphasizing the importance of using multifaceted approaches in happiness research and policy development.
-"
+abstract: "This study investigates the connection between income inequality and national hapiness, questioning the impact of the Gini index. By examining cross-sectional data we find that income inequality has a limited direct effect on happiness. It is evident that factors like the quality of institutions and levels of development as measured by the Democracy Index and the Inequality adjusted Human Development Index (IHDI) have a more significant impact on shaping happiness. Our results indicate that focusing solely on income inequality doesn't provide a complete understanding. Instead a wider range of indicators are. This research contributes to the conversation on disparity and satisfaction by emphasizing the importance of using multifaceted approaches in happiness research and policy development."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -21,13 +19,14 @@ bibliography: references.bib
 library(tidyverse)
 library(ggplot2)
 library(modelsummary)
+library(rstanarm)
+library(car)
 
 ```
 
 # Introduction
 
 ## Background
-
 Global discourse on well-being has increasingly recognized happiness as a critical indicator of societal progress. This paper embarks on an empirical inquiry into the determinants of happiness, with a particular focus on income distribution. Traditional economic theories suggest a correlation between economic prosperity and happiness, but emerging research prompts a re-evaluation of this association. In this context, income inequality, typically measured by the Gini index, emerges as a potential factor influencing happiness. Yet, the depth of its impact remains under-examined and is often overshadowed by more visible economic indicators.
 
 ## Research Question and Objectives
@@ -96,80 +95,20 @@ This dataset's geographic and temporal scope provides a robust basis for evaluat
 
 ### Happiness Score Distribution
 
-```{r}
-#| label: fig-hist-hap
-#| fig-cap: Distribution of Happiness Scores
-#| echo: false
-#| warning: false
-#| message: false
-
-
-analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
-analysis_data$IHDI <- round(as.numeric(analysis_data$IHDI), 3)
-
-ggplot(analysis_data, aes(x = Happiness_score)) +
-  geom_histogram(binwidth = 0.2, fill = "skyblue", color = "black") +
-  labs(x = "Happiness Score", y = "Frequency") +
-  theme_minimal()
-```
-
 In @fig-hist-hap we see how happiness scores are spread out in the sample. The graph reveals that there are peaks indicating common levels of reported happiness. Most countries fall in the mid-range of scores suggesting that a moderate level of self reported well being is most common. Notably few countries report high or low happiness levels showing that globally such extreme ratings are rare.
 
 ### Gini Index Distribution
-
-```{r}
-#| label: fig-hist-gini
-#| fig-cap: Distribution of Gini Index
-#| echo: false
-#| warning: false
-#| message: false
-
-# Histogram of Gini Coefficients
-ggplot(analysis_data, aes(x = Gini_Index)) +
-  geom_histogram(binwidth = 1, fill = "lightgreen", color = "black") +
-  labs(x = "Gini index", y = "Frequency") +
-  theme_minimal()
-
-```
 
 The distribution of Gini index values shown in @fig-hist-gini displays a pattern indicating that most countries have lower levels of inequality and fewer have high inequality. This skewness suggests that although income inequality exists extreme cases are not as prevalent.
 
 ### Relationship Between Happiness and Gini Index
 
-```{r}
-#| label: fig-scat-hap-gini
-#| fig-cap: Relationship between Gini Index and Happiness
-#| echo: false
-
-# Load the necessary libraries
-library(ggplot2)
-
-#  scatter plot
-basic_plot <- ggplot(analysis_data, aes(x = Gini_Index, y = Happiness_score)) +
-  geom_point()
-
-# Display the plot
-print(basic_plot)
-```
-
 In @fig-scat-hap-gini there's a scatter plot comparing happiness scores to Gini index values. The plot doesn't show a persistent pattern or strong linear relationship implying that factors other than income inequality may also influence happiness.
 
 ### Relationship Between Happiness and IHDI
 
-```{r}
-#| label: fig-scat-hap-ihdi
-#| fig-cap: Relationship between IHDI and Happiness
-#| echo: false
-#| warning: false
-
-# scatter plot for IHDI vs. Happiness Score
-basic_plot_ihdi <- ggplot(analysis_data, aes(x = IHDI, y = Happiness_score)) +
-  geom_point()
-
-print(basic_plot_ihdi)
-```
-
 Lastly @fig-scat-hap-ihdi illustrates the connection between happiness scores and IHDI. A positive trend is visible with higher IHDI values corresponding to happiness scores. This suggests a link where countries with equitable human development tend to have happier citizens.
+
 
 ### Discussion
 
@@ -215,63 +154,40 @@ The data are prepared for analysis by ensuring no multicollinearity among predic
 
 We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
 
-### Model justification
+## Model justification
 
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
+The selection of linear regression as the analytical method in this study is justified by its suitability for quantifying relationships between a continuous dependent variable and one or more independent variables. The first model, examining the influence of income inequality on happiness, utilizes a single predictor, the Gini index, to isolate its effect. This model serves as a point of reference for understanding the baseline impact of inequality on national happiness levels without additional factors.
 
-We can use maths by including latex between dollar signs, for instance $\theta$.
+In contrast, the second model's inclusion of the Democracy index and IHDI variables alongside the Gini index allows for a deeper investigation into how happiness correlates with a broader set of economic and socio-political variables. This approach is informed by the theoretical foundation suggesting that happiness is a multifaceted construct influenced by various aspects of societal development and governance.
+
+Both models are grounded in empirical evidence from prior research indicating potential links between these variables and happiness. By employing OLS regression, we aim to build on these findings, providing clear, interpretable coefficients that measure the strength and direction of these relationships. The simplicity and transparency of OLS facilitate the communication of results to a broad audience, which aligns with the study's objective of contributing to the policy discourse on enhancing societal well-being.
+
 
 # Results
 
-Our results are summarized in @tbl-modelresults.
+## Baseline Model
 
-```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
+The baseline results are summaried in @tbl-firsttmodelresults. Findings show that as income inequality increases happiness scores tend to decrease with a negative coefficient ($\beta$ = −0.043) and a p value of 0.001 supporting this trend. This means a 1% increase in inequality is associated with a 0.043 drop in the happiness score of a country. The models intercept is positive ($\alpha$ = 7.263), indicating the happiness score in the absence of income inequality. However with an R squared value of 0.103, 10.3% of the variations in happiness scores can be explained by the Gini index alone, hinting at other contributing factors beyond this models scope. The models credibility is bolstered by a F statistic (F = 11.489) affirming the significance of the regression equation. Additionally an RMSE of 1.00 suggests how much happiness scores deviate from predicted values by the model on average.
 
-library(rstanarm)
+While it aligns with expectations that higher income inequality corresponds to lower reported happiness levels, the limited explanatory power emphasizes the necessity for a more comprehensive model incorporating additional variables. The upcoming parts will expand on this analysis by incorporating socio-economic factors into the regression model.
 
-first_model <-
-  readRDS(file = here::here("models/first_model.rds"))
+## Extended Model
 
-second_model <-
-  readRDS(file = here::here("models/second_model.rds"))
+The extended model combines the Democracy index and IHDI with the Gini index to explore how they collectively influence happiness levels. The findings reveal a connection between IHDI and happiness scores ($\beta_3$ = 4.112, p < 0.001) indicating that nations with higher human development levels, adjusted for inequality show higher happiness among their populace.
 
-```
+It's worth noting that the Democracy index also demonstrates a positive impact ($\beta_1$ = 0.096, p = 0.019) suggesting that democratic governance is linked to increased happiness scores. This aligns with the expected theory that democratic societies offering freedoms and citizen engagement can enhance well being.
 
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-firsttmodelresults
-#| tbl-cap: "Linear Regression"
-#| warning: false
+In this model the Gini index coefficient is positive ($\beta_2$ = 0.013) but not statistically significant (p = 0.124) differing from the base model results. This change emphasizes the importance of considering socio-economic factors when assessing national welfare.
 
-# Generate the model summary for 'first_model' with the desired statistics
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = c("std.error", "statistic", "p.value", "conf.int")
-)
-```
+The models explanatory capability has been notably improved, with an R squared value of 0.735 showing that 73.5% of happiness score variations are accounted for by the model. The adjusted R squared value of 0.727 considers predictor variables. Confirms the models reliability. The decrease in RMSE to 0.53 when compared to the model indicates a predictive capability of this expanded analysis.
 
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-secondtmodelresults
-#| tbl-cap: "Multiple Linear Regression"
-#| warning: false
+## Diagnostic checks
+The Q-Q plot for the residuals of the second model in @fig-qq exhibits a slight deviation from normality, particularly in the tails, suggesting the presence of outliers or heavy tails in the data distribution. This deviation from the expected straight line in the Q-Q plot could imply that the residuals do not follow a perfect normal distribution, which is an assumption for the OLS regression. However, the majority of the points do align well with the theoretical quantiles, indicating that any deviations from normality are not extreme.
 
-# Generate the model summary for 'first_model' with the desired statistics
-modelsummary::modelsummary(
-  list(
-    "Second model" = second_model
-  ),
-  statistic = c("std.error", "statistic", "p.value", "conf.int")
-)
-```
+Moreover, this departure from normality does not necessarily invalidate the model but does suggest that predictions may be less reliable at the extremities of the data range. It might be beneficial to explore whether a transformation of the response variable or the use of robust regression techniques could yield a more homoscedastic and normally distributed set of residuals. The model could also be enhanced by investigating potential leverage points or influential observations that may disproportionately impact the regression results.
+
+Despite these considerations, the central mass of the data adheres closely to the line, reinforcing confidence in the model's findings for the majority of the data. Consequently, while the Q-Q plot indicates minor concerns, the overall diagnostic evaluation suggests that the model provides a generally reliable representation of the data.
+
 
 # Discussion
 
@@ -293,44 +209,127 @@ Weaknesses and next steps should also be included.
 
 # Appendix {.unnumbered}
 
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows...
+# Tables and figures
 
 ```{r}
-#| eval: true
+#| label: fig-hist-hap
+#| fig-cap: Distribution of Happiness Scores
 #| echo: false
-#| message: false
 #| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
+#| message: false
+
+
+analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
+analysis_data$IHDI <- round(as.numeric(analysis_data$IHDI), 3)
+
+ggplot(analysis_data, aes(x = Happiness_score)) +
+  geom_histogram(binwidth = 0.2, fill = "skyblue", color = "black") +
+  labs(x = "Happiness Score", y = "Frequency") +
+  theme_minimal()
+```
+
+```{r}
+#| label: fig-hist-gini
+#| fig-cap: Distribution of Gini Index
+#| echo: false
+#| warning: false
+#| message: false
+
+# Histogram of Gini Coefficients
+ggplot(analysis_data, aes(x = Gini_Index)) +
+  geom_histogram(binwidth = 1, fill = "lightgreen", color = "black") +
+  labs(x = "Gini index", y = "Frequency") +
+  theme_minimal()
 
 ```
 
+```{r}
+#| label: fig-scat-hap-gini
+#| fig-cap: Relationship between Gini Index and Happiness
+#| echo: false
+
+#  scatter plot
+basic_plot <- ggplot(analysis_data, aes(x = Gini_Index, y = Happiness_score)) +
+  geom_point()
+
+# Display the plot
+print(basic_plot)
+```
+
+```{r}
+#| label: fig-scat-hap-ihdi
+#| fig-cap: Relationship between IHDI and Happiness
+#| echo: false
+#| warning: false
+
+# scatter plot for IHDI vs. Happiness Score
+basic_plot_ihdi <- ggplot(analysis_data, aes(x = IHDI, y = Happiness_score)) +
+  geom_point()
+
+print(basic_plot_ihdi)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+
+first_model <-
+  readRDS(file = here::here("models/first_model.rds"))
+
+second_model <-
+  readRDS(file = here::here("models/second_model.rds"))
+
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-firsttmodelresults
+#| tbl-cap: "Linear Regression"
+#| warning: false
+
+modelsummary::modelsummary(
+  list(
+    "First model" = first_model
+  ),
+  statistic = c("std.error", "statistic", "p.value", "conf.int")
+)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-secondtmodelresults
+#| tbl-cap: "Multiple Linear Regression"
+#| warning: false
+
+modelsummary::modelsummary(
+  list(
+    "Second model" = second_model
+  ),
+  statistic = c("std.error", "statistic", "p.value", "conf.int")
+)
+```
+
+\newpage
+
+# Model details {#sec-model-details}
+In preparation for the OLS regression, the dataset was meticulously inspected for multicollinearity to prevent inflated variance in the coefficient estimates. The IHDI, adjusted for income disparities, was chosen specifically to avoid overlap with the Gini index. The assumptions of residual normality, constant variance across predictions (homoscedasticity), and the independence of observations were each tested. Any deviations from these conditions prompted corrective measures such as variable transformations to achieve normality and homoscedasticity, and the use of robust standard errors to counteract potential heteroscedasticity, ensuring the robustness of our regression results.
+
 ## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
 
 ```{r}
 #| echo: false
 #| eval: true
 #| message: false
 #| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
+#| label: fig-qq
 
+# Plotting residuals to check for normality
+qqPlot(second_model, main = "Q-Q Plot for Model Residuals")
 ```
 
 \newpage
